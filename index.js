@@ -20,6 +20,16 @@ function initializeData() {
 
 // TASK: Get elements from the DOM
 const elements = {
+  header: document.getElementById('header'),
+  dropDownBtn: document.getElementById('dropdownBtn'),
+  sideBar: document.getElementById('side-bar-div'),
+  sideBarBtn: document.getElementById('show-side-bar-btn'),
+  layoutDiv: document.getElementById('layout'),
+  newTaskBtn: document.getElementById('add-new-task-btn'),
+  editBoardBtn: document.getElementById('edit-board-btn'),
+  editBordDiv: document.getElementById('editBoardDiv'),
+  deletBoardBtn: document.getElementById('deleteBoardBtn'),
+
 
 }
 
