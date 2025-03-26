@@ -26,13 +26,14 @@ const elements = {
   headerBoardName: document.getElementById('header-board-name'),
   sideBar: document.getElementById('side-bar-div'),
   sideBarBtn: document.getElementById('show-side-bar-btn'),
-  layoutDiv: document.getElementById('layout'),
-  newTaskBtn: document.getElementById('add-new-task-btn'),
-  editBoardBtn: document.getElementById('edit-board-btn'),
-  editBordDiv: document.getElementById('editBoardDiv'),
-  deletBoardBtn: document.getElementById('deleteBoardBtn'),
-  
-
+  filterDiv: document.getElementById('filterDiv'),
+  columnDivs: document.querySelectorAll('.column-div'),
+  editTaskModal: document.getElementById('edit-btn'),
+  hideSideBarBtn: document.getElementById('hide-side-bar-btn'),
+  showSideBarBtn: document.getElementById('show-side-bar-btn'),
+  createNewTaskBtn: document.getElementById('create-task-btn'),
+  modalWindow: document.getElementById('new-task-modal-window'),
+  themeSwitch: document.getElementById('switch'),
 
 };
 
@@ -157,7 +158,9 @@ function addTaskToUI(task) {
 function setupEventListeners() {
   // Cancel editing task event listener
   const cancelEditBtn = document.getElementById('cancel-edit-btn');
-  cancelEditBtn.click() => toggleModal(false, elements.editTaskModal));
+  cancelEditBtn.addEventListener("click",() => {
+    toggleModal(false, elements.editTaskModal)
+  });
 
   // Cancel adding new task event listener
   const cancelAddTaskBtn = document.getElementById('cancel-add-task-btn');
@@ -173,8 +176,8 @@ function setupEventListeners() {
   });
 
   // Show sidebar event listener
-  elements.hideSideBarBtn.click() => toggleSidebar(false));
-  elements.showSideBarBtn.click() => toggleSidebar(true));
+  elements.hideSideBarBtn.addEventListener("click", () => toggleSidebar(false));
+  elements.showSideBarBtn.addEventListener("click", () => toggleSidebar(true));
 
   // Theme switch event listener
   elements.themeSwitch.addEventListener('change', toggleTheme);
@@ -194,7 +197,7 @@ function setupEventListeners() {
 // Toggles tasks modal
 // Task: Fix bugs
 function toggleModal(show, modal = elements.modalWindow) {
-  modal.style.display = show ? 'block' => 'none'; 
+  modal.style.display = show ? 'block' : 'none'; 
 }
 
 /*************************************************************************************************************************************************
