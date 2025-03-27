@@ -1,6 +1,6 @@
 // TASK: import helper functions from utils
 // TASK: import initialData
-import { getTasks, createNewTask, patchTask, putTask, deleteTask } from './utils.js';
+import { getTasks, createNewTask, patchTask, putTask, deleteTask } from './utils/taskFunctions.js'; 
 import { initialData } from './initialData.js';
 
 
@@ -213,8 +213,12 @@ function addTask(event) {
 
   //Assign user input to the task object
     const task = {
-      
+      title: document.getElementById('title-input').value.trim,
+      description: document.getElementById('desc-input').value.trim,
+      status: document.getElementById('select-status').value.trim,
+      board: activeBoard
     };
+
     const newTask = createNewTask(task);
     if (newTask) {
       addTaskToUI(newTask);
@@ -227,11 +231,19 @@ function addTask(event) {
 
 
 function toggleSidebar(show) {
- 
+  if (show) {
+    elements.sideBar.style.display = 'block';
+    elements.showSideBarBtn.style.display = 'none';
+  } else {
+    elements.sideBar.style.display = 'none';
+    elements.showSideBarBtn.style.display = 'block';
+  }
+  localStorage.setItem('showSideBar', show.toString());
 }
 
 function toggleTheme() {
- 
+  const isLightTheme = document.body.classList.toggle('light-theme');
+  localStorage.setItem('light-theme', isLightTheme ? 'enabled' : 'disabled');
 }
 
 
@@ -274,6 +286,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function init() {
+  initializeData();
   setupEventListeners();
   const showSidebar = localStorage.getItem('showSideBar') === 'true';
   toggleSidebar(showSidebar);
