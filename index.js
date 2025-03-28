@@ -31,12 +31,13 @@ const elements = {
   editTaskModal: document.getElementById('edit-btn'),
   hideSideBarBtn: document.getElementById('hide-side-bar-btn'),
   showSideBarBtn: document.getElementById('show-side-bar-btn'),
-  createNewTaskBtn: document.getElementById('create-task-btn'),
+  addNewTaskBtn: document.getElementById('add-new-task-btn'),
   modalWindow: document.getElementById('new-task-modal-window'),
   themeSwitch: document.getElementById('switch'),
   saveChangesBtn: document.getElementById('save-task-changes-btn'),
   deleteTaskBtn: document.getElementById('delete-task-btn'),
   cancelTaskBtn: document.getElementById('cancel-edit-btn'),
+  createTaskBtn: document.getElementById('create-task-btn'),
 
 };
 
@@ -190,14 +191,14 @@ function setupEventListeners() {
   elements.themeSwitch.addEventListener('change', toggleTheme);
 
   // Show Add New Task Modal event listener
-  elements.createNewTaskBtn.addEventListener('click', () => {
+  elements.addNewTaskBtn.addEventListener('click', () => {
     toggleModal(true);
     elements.filterDiv.style.display = 'block'; // Also show the filter overlay
   });
 
   // Add new task form submission event listener
-  elements.modalWindow.addEventListener('submit',  (event) => {
-    addTask(event)
+  elements.createTaskBtn.addEventListener('click',  (event) => {
+    addTask(event);
   });
 }
 
@@ -216,9 +217,9 @@ function addTask(event) {
 
   //Assign user input to the task object
     const task = {
-      title: document.getElementById('title-input').value.trim,
-      description: document.getElementById('desc-input').value.trim,
-      status: document.getElementById('select-status').value,
+      title: document.getElementById('modal-title-input').value,
+      description: document.getElementById('modal-desc-input').value,
+      status: document.getElementById('modal-select-status').value,
       board: activeBoard
     };
 
@@ -253,8 +254,8 @@ function toggleTheme() {
 
 function openEditTaskModal(task) {
   // Set task details in modal inputs
-  document.getElementById('edit-task-title-input').value.trim = task.title;
-  document.getElementById('edit-task-desc-input').value.trim = task.description;
+  document.getElementById('edit-task-title-input').value = task.title;
+  document.getElementById('edit-task-desc-input').value = task.description;
   document.getElementById('edit-select-status').value = task.status;
 
   // Get button elements from the task modal
@@ -263,7 +264,7 @@ function openEditTaskModal(task) {
   elements.cancelTaskBtn
 
   // Call saveTaskChanges upon click of Save Changes button
-  saveChangesBtn.addEventListener('click', () => {
+  elements.saveChangesBtn.addEventListener('click', () => {
     saveTaskChanges(task.id);
   });
 
