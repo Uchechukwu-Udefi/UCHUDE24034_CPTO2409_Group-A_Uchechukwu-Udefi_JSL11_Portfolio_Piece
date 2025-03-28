@@ -28,7 +28,7 @@ const elements = {
   sideBarBtn: document.getElementById('show-side-bar-btn'),
   filterDiv: document.getElementById('filterDiv'),
   columnDivs: document.querySelectorAll('.column-div'),
-  editTaskModal: document.getElementById('edit-btn'),
+  editTaskModal: document.getElementById('edit-task-form'),
   hideSideBarBtn: document.getElementById('hide-side-bar-btn'),
   showSideBarBtn: document.getElementById('show-side-bar-btn'),
   addNewTaskBtn: document.getElementById('add-new-task-btn'),
@@ -217,15 +217,15 @@ function addTask(event) {
 
   //Assign user input to the task object
     const task = {
-      title: document.getElementById('modal-title-input').value,
-      description: document.getElementById('modal-desc-input').value,
-      status: document.getElementById('modal-select-status').value,
+      title: document.getElementById('title-input').value,
+      description: document.getElementById('desc-input').value,
+      status: document.getElementById('select-status').value,
       board: activeBoard
     };
 
     const newTask = createNewTask(task);
     if (newTask) {
-      addTaskToUI(newTask);
+      addTaskToUI(task);
       toggleModal(false);
       elements.filterDiv.style.display = 'none'; // Also hide the filter overlay
       event.target.reset();
@@ -259,9 +259,11 @@ function openEditTaskModal(task) {
   document.getElementById('edit-select-status').value = task.status;
 
   // Get button elements from the task modal
-  elements.saveChangesBtn
-  elements.deleteTaskBtn
-  elements.cancelTaskBtn
+  /*
+  const saveChangesBtn = document.getElementById('save-task-changes-btn');
+  const deleteTaskBtn = document.getElementById('delete-task-btn');
+  const cancelTaskBtn = document.getElementById('cancel-edit-btn');
+  */
 
   // Call saveTaskChanges upon click of Save Changes button
   elements.saveChangesBtn.addEventListener('click', () => {
@@ -274,6 +276,7 @@ function openEditTaskModal(task) {
     toggleModal(false, elements.editTaskModal);
     refreshTasksUI();
   });
+  console.log('Opening modal for task:', task);
 
   toggleModal(true, elements.editTaskModal); // Show the edit task modal
 }
