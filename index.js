@@ -217,14 +217,42 @@ function addTask(event) {
 
   //Assign user input to the task object
     const task = {
-      title: document.getElementById('title-input').value,
-      description: document.getElementById('desc-input').value,
+      title: document.getElementById('title-input').value.trim(),
+      description: document.getElementById('desc-input').value.trim(),
       status: document.getElementById('select-status').value,
       board: activeBoard
     };
 
+    //Validation before creating task
+    if (task.title.trim() === '') {
+      alert('Please enter a title for your TASK! 🤔');
+      return;
+    }
+
+    if (task.description.trim() === '') {
+      alert('Please describe your TASK! 🤔');
+      return;
+    }
+
+    //Check if task already exist in the exist 
+    let existingTasks = JSON.parse(localStorage.getItem('tasks')) || [];
+    let isTitleDuplicate = existingTasks.some(existingTask => existingTask.title === task.title);
+    let isDescriptionDuplicate = existingTasks.some(existingTask => existingTask.description === task.description);
+
+    if (isTitleDuplicate) {
+      alert('This title already exists! Please enter a new title. 🤔');
+      return;
+    }
+
+    if (isDescriptionDuplicate) {
+      alert('There is a task with this description, Please check or enter a new task. 🤔');
+      return;
+    }
+
     const newTask = createNewTask(task);
     if (newTask) {
+
+    //Add task to UI
       addTaskToUI(task);
       toggleModal(false);
       elements.filterDiv.style.display = 'none'; // Also hide the filter overlay
