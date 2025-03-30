@@ -322,6 +322,32 @@ function saveTaskChanges(taskId) {
     status: updateSelectedStatus,
   }
 
+  //Validation before creating task
+  if (updatedTask.title.trim() === '') {
+    alert('Please enter a title for your TASK! 🤔');
+    return;
+  }
+
+  if (updatedTask.description.trim() === '') {
+    alert('Please describe your TASK! 🤔');
+    return;
+  }
+
+  //Check if task already exist in the exist 
+  let existingTasks = JSON.parse(localStorage.getItem('tasks')) || [];
+  let isUpdatedTitleDuplicate = existingTasks.some(existingTask => existingTask.title === updatedTask.title);
+  let isUpdatedDescriptionDuplicate = existingTasks.some(existingTask => existingTask.description === updatedTask.description);
+
+  if (isUpdatedTitleDuplicate) {
+    alert('This title already exists! Please enter a new title. 🤔');
+    return;
+  }
+
+  if (isUpdatedDescriptionDuplicate) {
+    alert('There is a task with this description, Please check or enter a new task. 🤔');
+    return;
+  }
+
   // Update task using a hlper functoin
   patchTask(taskId, updatedTask);
 
