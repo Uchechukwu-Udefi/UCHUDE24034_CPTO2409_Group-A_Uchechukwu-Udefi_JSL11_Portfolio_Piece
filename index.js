@@ -379,6 +379,8 @@ function init() {
 }
 
 
+
+
 //display button for deleting boards
    elements.editBoardBtn.addEventListener('click', () => {
       if (elements.editBoardDiv.style.display === 'none') {
@@ -388,61 +390,39 @@ function init() {
       }
    });
 
-////////////
-/*
-   const element = $0;
-const mediaQuery = window.matchMedia('(max-width: 768px)');
 
-const handleScreenSizeChange = (event) => {
-  if (event.matches) {
-    // Screen is smaller than 768px
-    setElementStyles(element, { display: 'none' });
-  } else {
-    // Screen is larger than 768px
-    setElementStyles(element, { display: 'flex' });
-  }
-};
-mediaQuery.addEventListener('change', handleScreenSizeChange);
-handleScreenSizeChange(mediaQuery);
-
-
-
-const element = $0;
-const mediaQuery = window.matchMedia('(max-width: 768px)');
-
-const handleScreenSizeChange = (event) => {
-  if (event.matches) {
-    // Screen is smaller than 768px
-    setElementStyles(element, { display: 'none' });
-  } else {
-    // Screen is larger than 768px
-    setElementStyles(element, { display: 'flex' });
-  }
-};
-
-mediaQuery.addEventListener('change', handleScreenSizeChange);
-handleScreenSizeChange(mediaQuery);
-
-*/
-
-
-const handleScreenSizeChange = (event) => {
-  // Check if elements.boardsnavLinkDiv is defined before attempting to access its style property
+// Helper function to update the display of the sidebar based on screen size
+const updateSideBarDisplay = (isMobile) => {
   if (!elements || !elements.sideBar) {
-    console.error('elements.boardsnavLinkDiv is undefined');
-    return; // Exit the function to avoid further errors
+    console.error('elements.sideBar is undefined');
+    return;
   }
-  if (event.matches) {
-    // Screen is smaller than 481px
-    elements.sideBar.style.display = 'none';
-  } else {
-    // Screen is larger than 481px
-    elements.sideBar.style.display = 'flex';
-    
+
+  elements.sideBar.style.display = isMobile ? 'none' : 'flex';
+};
+
+// Handle screen size change (mobile vs desktop)
+const handleScreenSizeChange = (event) => {
+  updateSideBarDisplay(event.matches);
+};
+
+// Set up media query listener
+const mediaQuery = window.matchMedia('(max-width: 800px)');
+mediaQuery.addEventListener('change', handleScreenSizeChange);
+handleScreenSizeChange(mediaQuery); // Initial check for screen size
+
+// Toggle sidebar visibility on button click
+let isSideBarVisible = true;
+
+const toggleSideBar = () => {
+  isSideBarVisible = !isSideBarVisible;
+  elements.sideBar.style.display = isSideBarVisible ? 'flex' : 'none';
+
+  // Toggle the board editing div display along with the sidebar
+  const editBoardDiv = elements.editBoardDiv;
+  if (editBoardDiv) {
+    editBoardDiv.style.display = isSideBarVisible ? 'none' : 'block'; // Hide the editBoardDiv when sidebar is visible
   }
 };
 
-const mediaQuery = window.matchMedia('(max-width: 800px)');
-
-mediaQuery.addEventListener('change', handleScreenSizeChange);
-handleScreenSizeChange(mediaQuery);
+elements.editBoardBtn.addEventListener('click', toggleSideBar);
