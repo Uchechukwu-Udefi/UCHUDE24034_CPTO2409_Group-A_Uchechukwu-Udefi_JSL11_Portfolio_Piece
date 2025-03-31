@@ -38,7 +38,13 @@ const elements = {
   deleteTaskBtn: document.getElementById('delete-task-btn'),
   cancelTaskBtn: document.getElementById('cancel-edit-btn'),
   createTaskBtn: document.getElementById('create-task-btn'),
-
+  editBoardBtn: document.getElementById('edit-board-btn'),
+  editBoardBtn: document.getElementById('edit-board-btn'),
+  editBoardDiv: document.getElementById('editBoardDiv'),
+  editBoardBtn: document.getElementById('edit-board-btn'),
+  boardsnavLinkDiv: document.getElementById('boards-nav-links-div'),
+  sideBarBottomDiv: document.querySelector('side-bar-bottom'),
+  
 };
 
 let activeBoard = ""
@@ -371,3 +377,72 @@ function init() {
   document.body.classList.toggle('light-theme', isLightTheme);
   fetchAndDisplayBoardsAndTasks(); // Initial display of boards and tasks
 }
+
+
+//display button for deleting boards
+   elements.editBoardBtn.addEventListener('click', () => {
+      if (elements.editBoardDiv.style.display === 'none') {
+        elements.editBoardDiv.style.display = 'block';
+      } else {
+        elements.editBoardDiv.style.display = 'none';
+      }
+   });
+
+////////////
+/*
+   const element = $0;
+const mediaQuery = window.matchMedia('(max-width: 768px)');
+
+const handleScreenSizeChange = (event) => {
+  if (event.matches) {
+    // Screen is smaller than 768px
+    setElementStyles(element, { display: 'none' });
+  } else {
+    // Screen is larger than 768px
+    setElementStyles(element, { display: 'flex' });
+  }
+};
+mediaQuery.addEventListener('change', handleScreenSizeChange);
+handleScreenSizeChange(mediaQuery);
+
+
+
+const element = $0;
+const mediaQuery = window.matchMedia('(max-width: 768px)');
+
+const handleScreenSizeChange = (event) => {
+  if (event.matches) {
+    // Screen is smaller than 768px
+    setElementStyles(element, { display: 'none' });
+  } else {
+    // Screen is larger than 768px
+    setElementStyles(element, { display: 'flex' });
+  }
+};
+
+mediaQuery.addEventListener('change', handleScreenSizeChange);
+handleScreenSizeChange(mediaQuery);
+
+*/
+
+
+const handleScreenSizeChange = (event) => {
+  // Check if elements.boardsnavLinkDiv is defined before attempting to access its style property
+  if (!elements || !elements.sideBar) {
+    console.error('elements.boardsnavLinkDiv is undefined');
+    return; // Exit the function to avoid further errors
+  }
+  if (event.matches) {
+    // Screen is smaller than 481px
+    elements.sideBar.style.display = 'none';
+  } else {
+    // Screen is larger than 481px
+    elements.sideBar.style.display = 'flex';
+    
+  }
+};
+
+const mediaQuery = window.matchMedia('(max-width: 800px)');
+
+mediaQuery.addEventListener('change', handleScreenSizeChange);
+handleScreenSizeChange(mediaQuery);
