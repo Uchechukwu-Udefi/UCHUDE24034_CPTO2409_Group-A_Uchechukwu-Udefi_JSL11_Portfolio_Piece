@@ -237,48 +237,24 @@ function addTask(event) {
       alert('Please describe your TASK! 🤔');
       return;
     }
-/*
-    //Check if task already exist in the storage
-    let existingTasks = JSON.parse(localStorage.getItem('tasks')) || [];
-    let isTitleDuplicate = existingTasks.some(existingTask => existingTask.title === task.title);
-    let isDescriptionDuplicate = existingTasks.some(existingTask => existingTask.description === task.description);
-
-    if (isTitleDuplicate) {
-      alert('This title already exists! Please enter a new title. 🤔');
-      return;
-    }
-
-    if (isDescriptionDuplicate) {
-      alert('There is a task with this description, Please check or enter a new task. 🤔');
-      return;
-    }
-*/
     
- // Check if task already exists in the list
-let existingTasks = JSON.parse(localStorage.getItem('tasks')) || [];
+  // Check if task already exists in the local storage
+    let existingTasks = JSON.parse(localStorage.getItem('tasks')) || [];
 
-let isTitleDuplicate = existingTasks.some(existingTask => 
-  (existingTask.title || '').toLowerCase() === task.title.toLowerCase() // Add fallback for missing titles
-);
-let isDescriptionDuplicate = existingTasks.some(existingTask => 
-  (existingTask.description || '').toLowerCase() === task.description.toLowerCase() // Add fallback for missing descriptions
-);
+    let isDuplicateTask = existingTasks.some(existingTask => 
+      (existingTask.title || '').toLowerCase() === task.title.toLowerCase() &&
+      (existingTask.description || '').toLowerCase() === task.description.toLowerCase()
+    );
 
-if (isTitleDuplicate) {
-  alert('This title already exists! Please enter a new title. 🤔');
-  return;
-}
-
-if (isDescriptionDuplicate) {
-  alert('There is a task with this description. Please check or enter a new task. 🤔');
-  return;
-}
-
+    if (isDuplicateTask) {
+      alert('This task with the same title and description already exists! Please check. 🤔');
+      return;
+    }
 
     const newTask = createNewTask(task);
     if (newTask) {
 
-    //Add task to UI
+    //Add task to UI and reset input value
       addTaskToUI(task);
       toggleModal(false);
       elements.filterDiv.style.display = 'none'; // Also hide the filter overlay
