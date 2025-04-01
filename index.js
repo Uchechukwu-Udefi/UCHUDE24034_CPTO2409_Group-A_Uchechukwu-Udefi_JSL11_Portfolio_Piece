@@ -39,9 +39,7 @@ const elements = {
   cancelTaskBtn: document.getElementById('cancel-edit-btn'),
   createTaskBtn: document.getElementById('create-task-btn'),
   editBoardBtn: document.getElementById('edit-board-btn'),
-  editBoardBtn: document.getElementById('edit-board-btn'),
   editBoardDiv: document.getElementById('editBoardDiv'),
-  editBoardBtn: document.getElementById('edit-board-btn'),
   boardsnavLinkDiv: document.getElementById('boards-nav-links-div'),
   sideBarBottomDiv: document.querySelector('side-bar-bottom'),
   
@@ -339,21 +337,6 @@ function saveTaskChanges(taskId) {
     return;
   }
 
-  //Check if task already exist in the exist 
-  let existingTasks = JSON.parse(localStorage.getItem('tasks')) || [];
-  let isUpdatedTitleDuplicate = existingTasks.some(existingTask => existingTask.title === updatedTask.title);
-  let isUpdatedDescriptionDuplicate = existingTasks.some(existingTask => existingTask.description === updatedTask.description);
-
-  if (isUpdatedTitleDuplicate) {
-    alert('This title already exists! Please enter a new title. 🤔');
-    return;
-  }
-
-  if (isUpdatedDescriptionDuplicate) {
-    alert('There is a task with this description, Please check or enter a new task. 🤔');
-    return;
-  }
-
   // Update task using a hlper functoin
   patchTask(taskId, updatedTask);
 
@@ -383,12 +366,18 @@ function init() {
 
 //display button for deleting boards
    elements.editBoardBtn.addEventListener('click', () => {
+    
       if (elements.editBoardDiv.style.display === 'none') {
         elements.editBoardDiv.style.display = 'block';
       } else {
         elements.editBoardDiv.style.display = 'none';
       }
-   });
+      // Check if the screen size is small and dropdown side bar
+      if (window.matchMedia('(max-width: 480px)').matches) { 
+      dropdownSideBar();
+    };
+    
+  });
 
 
 // Helper function to update the display of the sidebar based on screen size
@@ -397,7 +386,6 @@ const updateSideBarDisplay = (isMobile) => {
     console.error('elements.sideBar is undefined');
     return;
   }
-
   elements.sideBar.style.display = isMobile ? 'none' : 'flex';
 };
 
@@ -407,22 +395,17 @@ const handleScreenSizeChange = (event) => {
 };
 
 // Set up media query listener
-const mediaQuery = window.matchMedia('(max-width: 800px)');
+const mediaQuery = window.matchMedia('(max-width: 480px)');
 mediaQuery.addEventListener('change', handleScreenSizeChange);
 handleScreenSizeChange(mediaQuery); // Initial check for screen size
 
 // Toggle sidebar visibility on button click
 let isSideBarVisible = true;
 
-const toggleSideBar = () => {
+const dropdownSideBar = () => {
   isSideBarVisible = !isSideBarVisible;
   elements.sideBar.style.display = isSideBarVisible ? 'flex' : 'none';
 
-  // Toggle the board editing div display along with the sidebar
-  const editBoardDiv = elements.editBoardDiv;
-  if (editBoardDiv) {
-    editBoardDiv.style.display = isSideBarVisible ? 'none' : 'block'; // Hide the editBoardDiv when sidebar is visible
-  }
 };
 
-elements.editBoardBtn.addEventListener('click', toggleSideBar);
+elements.dropDownBtn.addEventListener('click', dropdownSideBar);
