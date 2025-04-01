@@ -237,8 +237,8 @@ function addTask(event) {
       alert('Please describe your TASK! 🤔');
       return;
     }
-
-    //Check if task already exist in the exist 
+/*
+    //Check if task already exist in the storage
     let existingTasks = JSON.parse(localStorage.getItem('tasks')) || [];
     let isTitleDuplicate = existingTasks.some(existingTask => existingTask.title === task.title);
     let isDescriptionDuplicate = existingTasks.some(existingTask => existingTask.description === task.description);
@@ -252,6 +252,28 @@ function addTask(event) {
       alert('There is a task with this description, Please check or enter a new task. 🤔');
       return;
     }
+*/
+    
+ // Check if task already exists in the list
+let existingTasks = JSON.parse(localStorage.getItem('tasks')) || [];
+
+let isTitleDuplicate = existingTasks.some(existingTask => 
+  (existingTask.title || '').toLowerCase() === task.title.toLowerCase() // Add fallback for missing titles
+);
+let isDescriptionDuplicate = existingTasks.some(existingTask => 
+  (existingTask.description || '').toLowerCase() === task.description.toLowerCase() // Add fallback for missing descriptions
+);
+
+if (isTitleDuplicate) {
+  alert('This title already exists! Please enter a new title. 🤔');
+  return;
+}
+
+if (isDescriptionDuplicate) {
+  alert('There is a task with this description. Please check or enter a new task. 🤔');
+  return;
+}
+
 
     const newTask = createNewTask(task);
     if (newTask) {
@@ -260,7 +282,8 @@ function addTask(event) {
       addTaskToUI(task);
       toggleModal(false);
       elements.filterDiv.style.display = 'none'; // Also hide the filter overlay
-      event.target.reset();
+      document.getElementById('title-input').value = '';
+      document.getElementById('desc-input').value = '';
       refreshTasksUI();
     }
 }
