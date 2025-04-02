@@ -1,5 +1,4 @@
-### Project Overview Video By Uchechukwu Henry Udefi
-![Video] (https://www.loom.com/share/1be42fcbe3d7425c846fda8c5cb724fc?sid=dd3fd792-ff07-4e22-9c6c-70e99d05d584)
+### Project Overview Video By Uchechukwu Henry Udefi https://www.loom.com/share/1be42fcbe3d7425c846fda8c5cb724fc?sid=dd3fd792-ff07-4e22-9c6c-70e99d05d584
 
 ### [JSL11] Agile Board - Kanban Task Management App
 
