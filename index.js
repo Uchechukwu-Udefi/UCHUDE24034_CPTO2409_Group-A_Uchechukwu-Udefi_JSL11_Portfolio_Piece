@@ -41,7 +41,7 @@ const elements = {
   editBoardBtn: document.getElementById('edit-board-btn'),
   editBoardDiv: document.getElementById('editBoardDiv'),
   boardsnavLinkDiv: document.getElementById('boards-nav-links-div'),
-  sideBarBottomDiv: document.querySelector('side-bar-bottom'),
+  sideBarBottomDiv: document.querySelector('.side-bar-bottom'),
   
 };
 
@@ -59,7 +59,8 @@ function fetchAndDisplayBoardsAndTasks() {
     elements.headerBoardName.textContent = activeBoard;
     styleActiveBoard(activeBoard);
     refreshTasksUI();
-  }
+  };
+  console.log("All Tasks:", tasks);
 }
 
 // Creates different boards in the DOM
@@ -313,6 +314,7 @@ function openEditTaskModal(task) {
   */
 
   // Call saveTaskChanges upon click of Save Changes button
+  elements.saveChangesBtn.removeEventListener('click', saveTaskChanges);
   elements.saveChangesBtn.addEventListener('click', () => {
     saveTaskChanges(task.id);
   });
